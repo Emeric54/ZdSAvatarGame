@@ -1,0 +1,46 @@
+<!doctype html>
+<head>
+    <title>The Game</title>
+</head>
+
+<div class="main">
+    <header>
+        {% for message in get_flashed_messages() %}
+            <div class=flash>{{ message }}</div>
+        {% endfor %}
+    </header>
+    <div class="form">
+        <form action="{{ url_for('play') }}" method="post">
+            Votre pseudo : <input type="text" name="pseudo" value={{ pseudo }}>
+            <p>
+                À qui appartient cet avatar ?<br>
+                <img src="{{ imageurl }}" width="80px" height="80px">
+            </p>
+            <ul>
+                {% for candidate in candidates %}
+                    <li><input type="radio" name="propal" value="{{ candidate.id }}">{{ candidate.pseudo }}</li>
+                {% endfor %}
+            </ul>
+            <input type="submit" value="Répondre">
+        </form>
+    </div>
+    <hr>
+    <div class="score">
+        <table>
+            <thead>
+                <tr>
+                    <td>Pseudo</td>
+                    <td>Score</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in score %}
+                    <tr>
+                        <td>{{ s.pseudo }}</td>
+                        <td>{{ s.score }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
