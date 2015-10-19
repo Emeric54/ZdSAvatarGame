@@ -1,46 +1,67 @@
 <!doctype html>
-<head>
-    <title>The Game</title>
-</head>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://zestedesavoir.com/static/css/main.min.5d1c8ada69fc.css" />
+        <title>The Game</title>
+    </head>
+    <body class="no-sidebar">
+        <div class="page-container">
+            <div class="main-container">
+                <div class="main clearfix">
+                    <main id="content" class="content-container" role="main">
+                        <section class="content-wrapper">
+                            {% for message in get_flashed_messages() %}
+                                <p class="flash alert-box success">{{ message }}</p>
+                            {% endfor %}
+                            <div>
+                                <div class="">
+                                    <div class="content-wrapper">
+                                        <form action="{{ url_for('play') }}" method="post">
+                                            <div class="control-group">
+                                                <label class="control-label required-filed" for="pseudo">Votre pseudo</label>
+                                                <div class="controls">
+                                                    <input class="textinput textInput" type="text" id="pseudo" type="text" name="pseudo" value={{ pseudo }}>
+                                                </div>
+                                            </div>
+                                            <p class="article-content">
+                                                À qui appartient cet avatar ?<br>
+                                                <figure>
+                                                    <img src="{{ imageurl }}" width="80px" height="80px">
+                                                </figure>
+                                            </p>
 
-<div class="main">
-    <header>
-        {% for message in get_flashed_messages() %}
-            <div class=flash>{{ message }}</div>
-        {% endfor %}
-    </header>
-    <div class="form">
-        <form action="{{ url_for('play') }}" method="post">
-            Votre pseudo : <input type="text" name="pseudo" value={{ pseudo }}>
-            <p>
-                À qui appartient cet avatar ?<br>
-                <img src="{{ imageurl }}" width="80px" height="80px">
-            </p>
-            <ul>
-                {% for candidate in candidates %}
-                    <li><input type="radio" name="propal" value="{{ candidate.id }}">{{ candidate.pseudo }}</li>
-                {% endfor %}
-            </ul>
-            <input type="submit" value="Répondre">
-        </form>
-    </div>
-    <hr>
-    <div class="score">
-        <table>
-            <thead>
-                <tr>
-                    <td>Pseudo</td>
-                    <td>Score</td>
-                </tr>
-            </thead>
-            <tbody>
-                {% for s in score %}
-                    <tr>
-                        <td>{{ s.pseudo }}</td>
-                        <td>{{ s.score }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
+                                                {% for candidate in candidates %}
+                                                    <p><input class="checkbox" type="radio" name="propal" value="{{ candidate.id }}">{{ candidate.pseudo }}</p>
+                                                {% endfor %}
+
+                                            <input class="btn" type="submit" value="Répondre"> <br/><br/>
+                                        </form>
+                                    </div>
+                                    <hr>
+                                    <div class="score table-wrapper">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <td>Pseudo</td>
+                                                    <td>Score</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for s in score %}
+                                                    <tr>
+                                                        <td>{{ s.pseudo }}</td>
+                                                        <td>{{ s.score }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
